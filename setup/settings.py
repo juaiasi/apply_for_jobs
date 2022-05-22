@@ -79,17 +79,15 @@ WSGI_APPLICATION = 'setup.wsgi.application'
 DATABASES = {
     'default': {
 
-        'ENGINE': '',
+        'ENGINE': 'django.db.backends.postgresql',
 
-        'NAME': '',
+        'NAME': 'pw_manager',
 
-        'USER': '<db_username>',
+        'USER': 'postgres',
 
-        'PASSWORD': '<password>',
+        'PASSWORD': config('DB_PW'),
 
-        'HOST': '<db_hostname_or_ip>',
-
-        'PORT': '<db_port>',
+        'HOST': 'localhost'
 
     }
 }
@@ -140,6 +138,13 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Media
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
+
+# Messages
 
 from django.contrib.messages import constants as messages
 
@@ -147,3 +152,8 @@ MESSAGE_TAGS = {
     messages.ERROR: 'danger',
     messages.SUCCESS: 'success'
 }
+
+# Project root
+
+PROJECT_ROOT = os.path.dirname(__file__)
+sys.path.insert(0,os.path.join(PROJECT_ROOT,'../apps'))
