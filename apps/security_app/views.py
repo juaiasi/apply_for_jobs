@@ -1,8 +1,8 @@
-import code
+from datetime import timedelta, date
 from django.shortcuts import render, get_object_or_404, redirect
 from security_app.models import Sharer 
 from django.contrib.auth.models import User
-from django.contrib.auth import get_user_model
+from shortuuid import ShortUUID
 
 def create_sharer(request):
 
@@ -15,39 +15,57 @@ def create_sharer(request):
         limit_datetime = request.POST['limit_datetime']
 
         # Criar sharer
-        sharer = Sharer.objects.create(user=user,code=code,limit_visits=limit_visits,limit_datetime=limit_datetime)
+        sharer = Sharer.objects.create(user=user,code=code,limit_visits=limit_visits,limit_datetime=limit_datetime,password=password)
         sharer.save()
 
         # Atualizar senha de um usuário criado
-        user.update(password=password).save()
+        # user.update(password=password).save()
 
-        return redirect('?user='+username)
-    elif 'user' in request.GET:
-        sharer = get_object_or_404(Sharer, user=user)
-        data = {
-            'sharer':sharer
-        }
-        return render(request, 'create_sharer.html',data)
+        return redirect('display_link',user=user.id)
     else:
-        User = get_user_model()
         users = User.objects.all()
         data = {
-            'users':users
+            'users':users,
+            'date': str(date.today() + timedelta(days = 7))
         }
         return render(request, 'create_sharer.html', data)
 
-def sharer(request):
-    if 'code' in request.GET:
-        sharer = get_object_or_404(Sharer, code=request.GET['code'])
-        if authorized_to_display(sharer):
-            return render(request, 'sharer.html')
-        else:
-            return render(request, 'sharer.html')
-    else:
-        return render(request, 'sharer.html')
+def display_link(request,user):
+    sharer = get_object_or_404(Sharer, user=user)
+    data ={
+        'sharer':sharer
+    }
+    return render(request,'display_link.html',data)
+
+def sharer(request,code):
+    sharer = get_object_or_404(Sharer, code=code)
+    if authorized_to_display(sharer):
+        limit_visits = sharer.limit_visits - 1
+        Sharer.objects.filter(code=code).update(limit_visits=limit_visits)
+        data ={
+            'sharer':sharer
+        }
+        return render(request, 'sharer.html', data)
+    return render(request, 'sharer.html')
 
 def generate_code():
-    return "..."
+    while True:
+        code = ShortUUID(alphabet="0123456789").random(length=5)
+        try:
+            Sharer.objects.get(code=code)
+        except:
+            break
+    return code
 
 def authorized_to_display(sharer):
-    return True
+    today = date.today()
+    limit_datetime = sharer.limit_datetime
+    limit_visits = sharer.limit_visits
+    public = sharer.public
+    code = sharer.code
+
+    if (limit_visits>0) and (limit_datetime>=today) and public:
+        return True
+    else:
+        Sharer.objects.filter(code=code).update(public=False,password="")
+        return False

@@ -1,14 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>
-        Crie uma senha
-    </h1>
-</body>
-</html>
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+    <div class="container">
+        <section>
+            <h1>
+                Crie uma senha
+            </h1>
+            <form action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <label for="username">Usuário</label>
+                <select name="username" id="username" required>
+                    {% for user in users %}
+                    <option title="{{user.username}}" value="{{user.username}}">{{user.username}}</option>
+                    {% endfor %}
+                </select>
+                <div>
+                    <label for="password">Nova senha</label>
+                    <input type="text" id="password" name="password" required>
+                    <button type="button">Gerar senha</button>
+                </div>
+                <div>
+                    <label for="limit_visits">Limite de acessos</label>
+                    <input type="number" id="limit_visits" name="limit_visits" required value="7">
+                </div>
+                <div>
+                    <label for="limit_datetime">Data limite</label>
+                    <input type="date" id="limit_datetime" name="limit_datetime" required value="{{date}}">
+                </div>
+                <div>
+                    <button type="submit">Gerar link de compartilhamento</button>
+                </div>
+            </form>
+        </section>
+    </div>
+
+{% endblock %}
