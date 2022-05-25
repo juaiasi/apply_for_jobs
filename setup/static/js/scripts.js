@@ -49,9 +49,5 @@ function generateRandomPassword(range = 16){
     // Shuffle concatenated value
     password = password.split('').sort().join('');
 
-    return arrayStrings
+    document.querySelector("input#password").value = password
 }    
-
-
-
-console.log(generateRandomPassword())
