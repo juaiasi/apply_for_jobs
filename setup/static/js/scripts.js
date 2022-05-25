@@ -47,7 +47,22 @@ function generateRandomPassword(range = 16){
     }
     
     // Shuffle concatenated value
-    password = password.split('').sort().join('');
+    password = password.shuffle()
 
     document.querySelector("input#password").value = password
-}    
+}
+
+// Function for shuffle strings
+String.prototype.shuffle = function () {
+    let arrayFromString = this.split(""),
+        range = arrayFromString.length;
+
+    for(let i = range - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        let tmp = arrayFromString[i]; //temporary var
+        // One switches places with the other in random position:
+        arrayFromString[i] = arrayFromString[j];
+        arrayFromString[j] = tmp;
+    }
+    return arrayFromString.join("");
+}
