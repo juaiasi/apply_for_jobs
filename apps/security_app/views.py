@@ -7,6 +7,19 @@ from django.contrib.auth.models import User
 from shortuuid import ShortUUID
 from django.contrib import auth, messages
 
+def dashboard(request):
+    if request.user.is_superuser and request.user.is_authenticated:
+        sharer_list = Sharer.objects.all()
+        data = {
+            'sharers':sharer_list
+        }
+        return render(request,'sharing/dashboard.html',data)
+    elif request.user.is_authenticated and not request.user.is_superuser:
+        messages.error(request,"Você tentou acessar uma área restrita")
+        return redirect('logged')
+    messages.error(request,"Faça login para acessar essa área")
+    return redirect('login')
+
 def create_sharer(request):
     if request.user.is_superuser and request.user.is_authenticated:
         if request.method == 'POST':
@@ -99,7 +112,7 @@ def login(request):
             user = User.objects.filter(username=username).get()
             if user.is_superuser:
                 auth.login(request,authenticated)
-                return redirect('create_sharer')
+                return redirect('dashboard')
             auth.login(request,authenticated)
             return redirect('logged')
         messages.error(request,'Usuário não existe ou os dados estão incorretos')

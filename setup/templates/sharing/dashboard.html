@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+{% include 'partials/_alerts.html' %}
+<a href="{% url 'create_sharer' %}">Gerar nova senha e compartilhar</a>
+
+<h2>Links de compartilhamento</h2>
+<ul>
+{% for sharer in sharers %}
+    <li><a href="{% url 'sharer' sharer.code %}">{% url 'sharer' sharer.code %}</a></li>
+{% endfor %}
+</ul>
+
+{% endblock %}
