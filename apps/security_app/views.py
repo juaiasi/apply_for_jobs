@@ -23,13 +23,21 @@ def create_sharer(request):
             if not validated_fields(fields,request):
                 return redirect('create_sharer')
 
+            if Sharer.objects.filter(user=user).exists():
+                Sharer.objects.filter(user=user).update(user=user,
+                                                        code=fields['code'],
+                                                        limit_visits=fields['limit_visits'],
+                                                        limit_datetime=fields['limit_datetime'],
+                                                        password=fields['password'],
+                                                        public=True)
+            else:
             # Criar sharer
-            sharer = Sharer.objects.create(user=fields['user'],
-                                            code=fields['code'],
-                                            limit_visits=fields['limit_visits'],
-                                            limit_datetime=fields['limit_datetime'],
-                                            password=fields['password'])
-            sharer.save()
+                sharer = Sharer.objects.create(user=user,
+                                                code=fields['code'],
+                                                limit_visits=fields['limit_visits'],
+                                                limit_datetime=fields['limit_datetime'],
+                                                password=fields['password'])
+                sharer.save()
 
             # Atualizar senha do usuário
 
