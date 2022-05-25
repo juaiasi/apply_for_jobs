@@ -2,6 +2,7 @@
 {% load static %}
 {% block content %}
 
+{% include 'partials/_alerts.html' %}
 <a href="{% url 'sharer' sharer.code %}">{% url 'sharer' sharer.code %}</a>
 
 {% endblock %}
