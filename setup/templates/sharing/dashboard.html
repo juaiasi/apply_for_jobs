@@ -3,13 +3,46 @@
 {% block content %}
 
 {% include 'partials/_alerts.html' %}
-<a href="{% url 'create_sharer' %}">Gerar nova senha e compartilhar</a>
-
-<h2>Links de compartilhamento</h2>
-<ul>
-{% for sharer in sharers %}
-    <li><a href="{% url 'sharer' sharer.code %}">{% url 'sharer' sharer.code %}</a></li>
-{% endfor %}
-</ul>
+<div class="container">
+    <section>
+        <div class="title-btn">
+            <h4>Links de compartilhamento de senha</h4>
+            <a class="btn btn-primary" href="{% url 'create_sharer' %}">Gerar link</a>
+        </div>
+        {% if sharers %}
+        <table class="table mt-4">
+            <thead class="thead-light">
+                <th scope="col">Link</th>
+                <th scope="col">Usuário</th>
+                <th scope="col">Status</th>
+                <th scope="col">Visitas restantes</th>
+                <th scope="col"s>Validade</th>
+            </thead>
+            <tbody>
+                {% for sharer in sharers %}
+                <tr>
+                    <td><a href="{% url 'sharer' sharer.code %}">{% url 'sharer' sharer.code %}</a></td>
+                    <td>{{ sharer.user }}</td>
+                    <td>
+                        {% if sharer.public %}
+                            público
+                        {% else %}
+                            expirou
+                        {% endif %}
+                    </td>
+                    <td>{{sharer.limit_visits}}</td>
+                    <td>{{sharer.limit_datetime}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="alert alert-info" role="alert">
+            Não há links gerados.
+        </div>
+        {% endif %}
+    </section>
+    
+</div>
 
 {% endblock %}

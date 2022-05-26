@@ -2,27 +2,29 @@
 {% load static %}
 {% block content %}
 
-<div class="container">
-    <section>
-        {% include 'partials/_alerts.html' %}
-        <h1>
-            Login
-        </h1>
-        <form action="" method="post" enctype="multipart/form-data">
+<div class="container centralizer">
+    <div class="form-box form-login w-100 m-auto">
+        <form action="{% url 'login' %}" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <h2 class="text-center">
+                    Login
+                </h2>
+            </div>
+            {% include 'partials/_alerts.html' %}
             {% csrf_token %}
-            <div>
-                <label for="username">Usuário</label>
-                <input type="text" id="username" name="username" required>
+            <div class="form-group">
+                <label class="form-label" for="username">Usuário</label>
+                <input class="form-control" type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="password">Senha</label>
+                <input class="form-control" type="password" id="password" name="password" required>
             </div>
             <div>
-                <label for="password">Senha</label>
-                <input type="text" id="password" name="password" required>
-            </div>
-            <div>
-                <button type="submit">Entrar</button>
+                <button class="w-100 btn btn-success btn-lg" type="submit">Entrar</button>
             </div>
         </form>
-    </section>
+    </div>
 </div>
 
 {% endblock %}

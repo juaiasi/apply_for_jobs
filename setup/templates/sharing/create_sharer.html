@@ -4,35 +4,48 @@
     
     <div class="container">
         <section>
-            {% include 'partials/_alerts.html' %}
-            <h1>
-                Crie uma senha
-            </h1>
-            <form action="" method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                <label for="username">Usuário</label>
-                <select name="username" id="username" required>
-                    {% for user in users %}
-                    <option title="{{user.username}}" value="{{user.username}}">{{user.username}}</option>
-                    {% endfor %}
-                </select>
-                <div>
-                    <label for="password">Nova senha</label>
-                    <input type="text" id="password" name="password" required>
-                    <button type="button" onclick="generateRandomPassword()">Gerar senha</button>
-                </div>
-                <div>
-                    <label for="limit_visits">Limite de acessos</label>
-                    <input type="number" id="limit_visits" name="limit_visits" required value="7">
-                </div>
-                <div>
-                    <label for="limit_datetime">Data limite</label>
-                    <input type="date" id="limit_datetime" name="limit_datetime" required value="{{date}}">
-                </div>
-                <div>
-                    <button type="submit">Gerar link de compartilhamento</button>
-                </div>
-            </form>
+            <div class="form-box w-100 m-auto">
+                {% include 'partials/_alerts.html' %}
+                
+                <form action="{% url 'create_sharer' %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <h4>
+                            Crie e compartilhe uma nova senha para o usuário
+                        </h4>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="username">Usuário</label>
+                        <select class="form-control" name="username" id="username" required>
+                            {% for user in users %}
+                            <option title="{{user.username}}" value="{{user.username}}">{{user.username}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div>
+                        <label class="form-label" for="password">Nova senha</label>
+                        <div class="row">
+                            <div class="col-8 form-group">
+                                <input class="form-control" type="text" id="password" name="password" required>
+                            </div>
+                            <div class="col-4 form-group">
+                                <button class="btn btn-primary w-100" type="button" onclick="generateRandomPassword()">Gerar</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="limit_visits">Limite de acessos</label>
+                        <input class="form-control" type="number" id="limit_visits" name="limit_visits" required value="7">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="limit_datetime">Data limite de acesso</label>
+                        <input class="form-control" type="date" id="limit_datetime" name="limit_datetime" required value="{{date}}">
+                    </div>
+                    <div>
+                        <button class="btn btn-success w-100 btn-lg" type="submit">Gerar link de compartilhamento</button>
+                    </div>
+                </form>
+            </div>
         </section>
     </div>
 

@@ -3,6 +3,14 @@
 {% block content %}
 
 {% include 'partials/_alerts.html' %}
-<a href="{% url 'sharer' sharer.code %}">{% url 'sharer' sharer.code %}</a>
+<div class="container centralizer">
+    <section>
+        <div class="text-center w-100">
+            <h4>Senha</h4>
+            <a href="{% url 'sharer' sharer.code %}">{% url 'sharer' sharer.code %}</a>
+        </div>
+    </section>
+</div>
+
 
 {% endblock %}

@@ -15,10 +15,11 @@ def dashboard(request):
         }
         return render(request,'sharing/dashboard.html',data)
     elif request.user.is_authenticated and not request.user.is_superuser:
-        messages.error(request,"Você tentou acessar uma área restrita")
+        messages.warning(request,"Você tentou acessar uma área restrita")
         return redirect('logged')
-    messages.error(request,"Faça login para acessar essa área")
-    return redirect('login')
+    else:
+        messages.warning(request,"Área restrita")
+        return redirect('login')
 
 def create_sharer(request):
     if request.user.is_superuser and request.user.is_authenticated:
@@ -66,9 +67,9 @@ def create_sharer(request):
             }
             return render(request, 'sharing/create_sharer.html', data)
     elif request.user.is_authenticated and not request.user.is_superuser:
-        messages.error(request,"Você tentou acessar uma área restrita")
+        messages.warning(request,"Você tentou acessar uma área restrita")
         return redirect('logged')
-    messages.error(request,"Faça login para acessar essa área")
+    messages.warning(request,"Área restrita.")
     return redirect('login')
 
 def display_link(request,user):
@@ -79,9 +80,9 @@ def display_link(request,user):
         }
         return render(request,'sharing/display_link.html',data)
     elif request.user.is_authenticated and not request.user.is_superuser:
-        messages.error(request,"Você tentou acessar uma área restrita")
+        messages.warning(request,"Você tentou acessar uma área restrita")
         return redirect('logged')
-    messages.error(request,"Faça login para acessar essa área")
+    messages.warning(request,"Área restrita.")
     return redirect('login')
 
 def sharer(request,code):
@@ -94,6 +95,7 @@ def sharer(request,code):
         }
         return render(request, 'sharing/sharer.html', data)
     else:
+        messages.info(request,'A senha não está mais disponível para visualização. Caso precise recuperá-la, peça ao adminstrador para gerar um novo link.')
         Sharer.objects.filter(code=code).update(public=False,password="")
         return render(request, 'sharing/sharer.html')
 
@@ -119,11 +121,17 @@ def login(request):
     
     if request.user.is_authenticated:
         auth.logout(request)
-        messages.error(request,'Você foi desconectado.')
+        messages.warning(request,'Você foi desconectado.')
     return render(request, 'user/login.html')
 
 def logged(request):
-    return render(request, 'user/logged.html')
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            return redirect('login')
+        return render(request, 'user/logged.html')
+    else:
+        messages.warning(request,'Você não está logado.')
+        return redirect('login')
 
 # -----------------------------------------------
 # Complementary functions
