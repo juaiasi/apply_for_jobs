@@ -1,7 +1,6 @@
 from django.contrib import admin
 from .models import Sharer
 
-# Register your models here.
 class ListingSharers( admin.ModelAdmin ):
     list_display = ('id','user', 'code', 'limit_visits', 'limit_datetime','public')
     list_display_links = ('id','user')
