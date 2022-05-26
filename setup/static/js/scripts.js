@@ -66,3 +66,11 @@ String.prototype.shuffle = function () {
     }
     return arrayFromString.join("");
 }
+
+function copyText(query_text,query_btn,msg){
+    var content = query_text === "#pw"? document.querySelector(query_text).value : document.querySelector(query_text).innerHTML;
+    navigator.clipboard.writeText(content)
+    
+    var tooltip = document.querySelector(query_btn);
+    tooltip.innerHTML = msg;
+}

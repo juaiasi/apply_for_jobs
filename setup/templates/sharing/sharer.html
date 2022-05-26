@@ -4,10 +4,44 @@
 
 <div class="container centralizer">
     <section>
-        {% include 'partials/_alerts.html' %}
-        <div class="text-center w-100">
-            <h4>Senha</h4>
-            <p>{{sharer.password}}</p>
+        <div class="text-center w-100 form-white form-box">
+            {% include 'partials/_alerts.html' %}
+            {% if sharer.public%}
+            <h4>Olá, {{sharer.user}}!</h4>
+            <p>Aqui está sua senha. Guarde com cuidado!</p>
+            <div class="tooltiptext text-right text-muted small" id="mytooltip">
+                <span>copiar senha</span>
+            </div>
+            <div class="field-sm-btn form-group">
+                <div>
+                    <input class="form-control" type="password" id="pw" value="{{sharer.password}}" readonly/>
+                </div>
+                <button class="btn btn-primary w-100" type="button" onclick="copyText('#pw','#mytooltip','senha copiada!')" title="Copiar senha">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                        <!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+                        <path fill="#ffffff" d="M384 96L384 0h-112c-26.51 0-48 21.49-48 48v288c0 26.51 21.49 48 48 48H464c26.51 0 48-21.49 48-48V128h-95.1C398.4 128 384 113.6 384 96zM416 0v96h96L416 0zM192 352V128h-144c-26.51 0-48 21.49-48 48v288c0 26.51 21.49 48 48 48h192c26.51 0 48-21.49 48-48L288 416h-32C220.7 416 192 387.3 192 352z"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="text-left infos-box">
+                <div class="d-flex text-muted pt-3 border-bottom">
+                    <p class="pb-3 mb-0 lh-sm">
+                        <strong class="text-gray-dark d-block">
+                            Visitas restantes 
+                        </strong>
+                        {{sharer.limit_visits}}
+                    </p>
+                </div>
+                <div class="d-flex text-muted pt-3 border-bottom">
+                    <p class="pb-3 mb-0 lh-sm">
+                        <strong class="text-gray-dark d-block">
+                            Validade
+                        </strong>
+                        {{sharer.limit_datetime}}
+                    </p>
+                </div>
+            </div>
+            {% endif %}
         </div>
     </section>
 </div>

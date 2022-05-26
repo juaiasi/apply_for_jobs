@@ -2,12 +2,64 @@
 {% load static %}
 {% block content %}
 
-{% include 'partials/_alerts.html' %}
 <div class="container centralizer">
     <section>
-        <div class="text-center w-100">
-            <h4>Senha</h4>
-            <a href="{% url 'sharer' sharer.code %}">{% url 'sharer' sharer.code %}</a>
+        <div class="text-center w-100 form-white form-box">
+            {% include 'partials/_alerts.html' %}
+            <h4>Link gerado com sucesso!</h4>
+            <p>A senha foi alterada e o link de compartilhamento já está disponível.</p>
+            <div class="tooltiptext text-right text-muted small" id="mytooltip">
+                <span>copiar texto</span>
+            </div>
+            <div class="field-sm-btn form-group">
+                <div class="field-readonly">
+                    <a href="{% url 'sharer' sharer.code %}">{% url 'sharer' sharer.code %}</a>
+                </div>
+                <button class="btn btn-primary w-100" type="button" onclick="copyText('.field-readonly a','#mytooltip','link copiado!')" title="Copiar link">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                        <!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+                        <path fill="#ffffff" d="M384 96L384 0h-112c-26.51 0-48 21.49-48 48v288c0 26.51 21.49 48 48 48H464c26.51 0 48-21.49 48-48V128h-95.1C398.4 128 384 113.6 384 96zM416 0v96h96L416 0zM192 352V128h-144c-26.51 0-48 21.49-48 48v288c0 26.51 21.49 48 48 48h192c26.51 0 48-21.49 48-48L288 416h-32C220.7 416 192 387.3 192 352z"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="text-left infos-box">
+                <div class="d-flex text-muted pt-3 border-bottom">
+                    <p class="pb-3 mb-0 lh-sm">
+                        <strong class="text-gray-dark d-block">
+                            Usuário
+                        </strong>
+                        {{sharer.user}}
+                    </p>
+                </div>
+                <div class="d-flex text-muted pt-3 border-bottom">
+                    <p class="pb-3 mb-0 lh-sm">
+                        <strong class="text-gray-dark d-block">
+                            Status do link
+                        </strong>
+                        {% if sharer.public %}
+                            público
+                        {% else %}
+                            expirou
+                        {% endif %}
+                    </p>
+                </div>
+                <div class="d-flex text-muted pt-3 border-bottom">
+                    <p class="pb-3 mb-0 lh-sm">
+                        <strong class="text-gray-dark d-block">
+                            Visitas restantes 
+                        </strong>
+                        {{sharer.limit_visits}}
+                    </p>
+                </div>
+                <div class="d-flex text-muted pt-3 border-bottom">
+                    <p class="pb-3 mb-0 lh-sm">
+                        <strong class="text-gray-dark d-block">
+                            Validade
+                        </strong>
+                        {{sharer.limit_datetime}}
+                    </p>
+                </div>
+            </div>
         </div>
     </section>
 </div>
