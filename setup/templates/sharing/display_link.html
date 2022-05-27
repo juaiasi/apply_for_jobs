@@ -46,7 +46,7 @@
                 <div class="d-flex text-muted pt-3 border-bottom">
                     <p class="pb-3 mb-0 lh-sm">
                         <strong class="text-gray-dark d-block">
-                            Visitas restantes 
+                            Acessos restantes 
                         </strong>
                         {{sharer.limit_visits}}
                     </p>
@@ -59,6 +59,7 @@
                         {{sharer.limit_datetime}}
                     </p>
                 </div>
+                <a href="{% url 'dashboard' %}" class="w-100 btn btn-primary mt-3">Voltar para o dashboard</a>
             </div>
         </div>
     </section>
