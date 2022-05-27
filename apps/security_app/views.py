@@ -1,5 +1,5 @@
 from datetime import timedelta, date
-from .validation.validation import fields_validated, validated_fields
+from .validation.validation import fields_validated
 from .validation.authorization import authorized_to_display_pw
 from django.shortcuts import render, get_object_or_404, redirect
 from security_app.models import Sharer 

@@ -83,7 +83,7 @@ DATABASES = {
 
         'NAME': 'pw_manager',
 
-        'USER': 'postgres',
+        'USER': config("DB_USER"),
 
         'PASSWORD': config('DB_PW'),
 
