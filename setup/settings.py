@@ -81,13 +81,15 @@ DATABASES = {
 
         'ENGINE': 'django.db.backends.postgresql',
 
-        'NAME': 'pw_manager',
+        'NAME': 'postgres',
 
-        'USER': config("DB_USER"),
+        'USER': 'postgres',
 
-        'PASSWORD': config('DB_PW'),
+        'PASSWORD': config("DB_PW"),
 
-        'HOST': 'localhost'
+        'HOST': 'db',
+
+        'PORT' : '5432'
 
     }
 }
