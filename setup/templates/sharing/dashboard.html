@@ -10,51 +10,53 @@
             <a class="btn btn-primary" href="{% url 'create_sharer' %}">Gerar link</a>
         </div>
         {% if sharers %}
-        <table class="table mt-4">
-            <thead class="thead-light">
-                <th scope="col">Link</th>
-                <th scope="col">Usuário</th>
-                <th scope="col">Status do link</th>
-                <th scope="col">Visitas restantes</th>
-                <th scope="col"s>Validade</th>
-            </thead>
-            <tbody>
-                {% for sharer in sharers %}
-                {% if not sharer.public %}
-                <tr class="expired">
-                {% else %}
-                <tr>
-                {% endif %}
-                    <td>
-                        <div class="tooltiptext text-left text-muted small" id="mytooltip-{{sharer.code}}">
-                            <span>copiar link</span>
-                        </div>
-                        <div class="field-sm-btn form-group">
-                            <button class="btn btn-primary w-100" type="button" onclick="copyText('#link-{{sharer.code}}','#mytooltip-{{sharer.code}}','link copiado!')" title="Copiar link">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-                                    <!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
-                                    <path fill="#ffffff" d="M384 96L384 0h-112c-26.51 0-48 21.49-48 48v288c0 26.51 21.49 48 48 48H464c26.51 0 48-21.49 48-48V128h-95.1C398.4 128 384 113.6 384 96zM416 0v96h96L416 0zM192 352V128h-144c-26.51 0-48 21.49-48 48v288c0 26.51 21.49 48 48 48h192c26.51 0 48-21.49 48-48L288 416h-32C220.7 416 192 387.3 192 352z"/>
-                                </svg>
-                            </button>
-                            <div class="field-readonly">
-                                <a href="{% url 'sharer' sharer.code %}" id="link-{{sharer.code}}">{% url 'sharer' sharer.code %}</a>
+        <div class="table-container">
+            <table class="table mt-4">
+                <thead class="thead-light">
+                    <th scope="col">Link</th>
+                    <th scope="col">Usuário</th>
+                    <th scope="col">Status do link</th>
+                    <th scope="col">Visitas restantes</th>
+                    <th scope="col"s>Validade</th>
+                </thead>
+                <tbody>
+                    {% for sharer in sharers %}
+                    {% if not sharer.public %}
+                    <tr class="expired">
+                    {% else %}
+                    <tr>
+                    {% endif %}
+                        <td>
+                            <div class="tooltiptext text-left text-muted small" id="mytooltip-{{sharer.code}}">
+                                <span>copiar link</span>
                             </div>
-                        </div>
-                    </td>
-                    <td>{{ sharer.user }}</td>
-                    <td>
-                        {% if sharer.public %}
-                            público
-                        {% else %}
-                            expirou
-                        {% endif %}
-                    </td>
-                    <td>{{sharer.limit_visits}}</td>
-                    <td>{{sharer.limit_datetime}}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                            <div class="field-sm-btn form-group">
+                                <button class="btn btn-primary w-100" type="button" onclick="copyText('#link-{{sharer.code}}','#mytooltip-{{sharer.code}}','link copiado!')" title="Copiar link">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                                        <!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+                                        <path fill="#ffffff" d="M384 96L384 0h-112c-26.51 0-48 21.49-48 48v288c0 26.51 21.49 48 48 48H464c26.51 0 48-21.49 48-48V128h-95.1C398.4 128 384 113.6 384 96zM416 0v96h96L416 0zM192 352V128h-144c-26.51 0-48 21.49-48 48v288c0 26.51 21.49 48 48 48h192c26.51 0 48-21.49 48-48L288 416h-32C220.7 416 192 387.3 192 352z"/>
+                                    </svg>
+                                </button>
+                                <div class="field-readonly">
+                                    <a href="{% url 'sharer' sharer.code %}" id="link-{{sharer.code}}">{% url 'sharer' sharer.code %}</a>
+                                </div>
+                            </div>
+                        </td>
+                        <td>{{ sharer.user }}</td>
+                        <td>
+                            {% if sharer.public %}
+                                público
+                            {% else %}
+                                expirou
+                            {% endif %}
+                        </td>
+                        <td>{{sharer.limit_visits}}</td>
+                        <td>{{sharer.limit_datetime}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
         {% else %}
         <div class="alert alert-info mt-4" role="alert">
             Não há links gerados.
