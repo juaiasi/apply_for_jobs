@@ -1,43 +1,46 @@
-function generateRandomPassword(range = 16){
-    let password = ""
-    let pw_range = range
-    let random = Math.random
+function generateRandomPassword(len = 16){
+    // Function for generating pandomic passwords with at least one character of each type, having the length provided as argument
+    let password = "",
+        pw_length = len,
+        random = Math.random,
                         // remains: minimal number of characters needed for other types of characters
-    let randomNumber = (remains) => Math.floor(random() * (pw_range - remains)) + 1
+        randomNumber = (remains) => Math.floor(random() * (pw_length - remains)) + 1
     
     // Sorting number of each type of character
-    const numberOfLowers = randomNumber(3)
-    const numberOfUppers = randomNumber(numberOfLowers + 2)
-    const numberOfNumbers = randomNumber(numberOfLowers + numberOfUppers + 1)
-    const numberOfSpecials = pw_range - numberOfLowers - numberOfUppers - numberOfNumbers
+    const numberOfLowers = randomNumber(3),
+        numberOfUppers = randomNumber(numberOfLowers + 2),
+        numberOfNumbers = randomNumber(numberOfLowers + numberOfUppers + 1),
+        numberOfSpecials = pw_length - numberOfLowers - numberOfUppers - numberOfNumbers
     
+    // Types of character strings
     let arrayStrings = [
         {
             string:'abcdefghijklmnopqrstuvxzwç',
-            range:numberOfLowers
+            len:numberOfLowers
         },
         {
             string:'ABCDEFGHIJKLMNOPQRSTUVXZWÇ',
-            range:numberOfUppers
+            len:numberOfUppers
         },
         {
             string:'1234567890',
-            range:numberOfNumbers
+            len:numberOfNumbers
         },
         {
             string:'!@#$%¨&*()_+-{}[]:;.>,<\\|/?\"\'¹²³£¢¬§ªº',
-            range:numberOfSpecials
+            len:numberOfSpecials
         },
     ]
     
     // Loops throught arrayStrings
-    for (let i = 0; i < arrayStrings.length; i++){
+    for (let i = 0; i < arrayStrings.len; i++){
 
         // Loops throught previously defined random intervals, that contains an specific type of string of characters
-        for (let r = 0; r < arrayStrings[i].range; r++){
+        for (let r = 0; r < arrayStrings[i].len; r++){
 
-            let randomPosition = Math.floor(random() * arrayStrings[i].string.length)   // random Position of char inside specifc string
-            let char = arrayStrings[i].string.charAt(randomPosition)                    // get char at random position
+            let randomPosition = Math.floor(random() * arrayStrings[i].string.length),   // random Position of char inside specifc string
+                char = arrayStrings[i].string.charAt(randomPosition)                    // get char at random position
+            
             password += char // Concatenate random char at password
 
             // Eliminating char, so there are no duplicates:
@@ -52,15 +55,15 @@ function generateRandomPassword(range = 16){
     document.querySelector("input#password").value = password
 }
 
-// Function for shuffle strings
 String.prototype.shuffle = function () {
+    // Function for shuffle strings
     let arrayFromString = this.split(""),
-        range = arrayFromString.length;
+        len = arrayFromString.length;
 
-    for(let i = range - 1; i > 0; i--) {
+    for(let i = len - 1; i > 0; i--) {
         let j = Math.floor(Math.random() * (i + 1));
         let tmp = arrayFromString[i]; //temporary var
-        // One switches places with the other in random position:
+        // Each one switches places with another in a random position:
         arrayFromString[i] = arrayFromString[j];
         arrayFromString[j] = tmp;
     }
@@ -68,9 +71,16 @@ String.prototype.shuffle = function () {
 }
 
 function copyText(query_text,query_btn,msg){
+    /* Function to copy the text of a tag (query_text),
+    activated by clicking the button (query_btn),
+    that returns a message of success (msg) */
+
+    // Check if query refers to the field that shows password, wich is an input. In that case, uses the "value" method. Else, uses "innerHTML"
     var content = query_text === "#pw"? document.querySelector(query_text).value : document.querySelector(query_text).innerHTML;
+    // Copy
     navigator.clipboard.writeText(content)
     
+    // Returns feedback with the chosen message
     var tooltip = document.querySelector(query_btn);
     tooltip.innerHTML = msg;
 }
