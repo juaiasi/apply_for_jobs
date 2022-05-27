@@ -33,7 +33,7 @@ function generateRandomPassword(len = 16){
     ]
     
     // Loops throught arrayStrings
-    for (let i = 0; i < arrayStrings.len; i++){
+    for (let i = 0; i < arrayStrings.length; i++){
 
         // Loops throught previously defined random intervals, that contains an specific type of string of characters
         for (let r = 0; r < arrayStrings[i].len; r++){
