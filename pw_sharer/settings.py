@@ -52,12 +52,12 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'setup.urls'
+ROOT_URLCONF = 'pw_sharer.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR,'setup/templates')],
+        'DIRS': [os.path.join(BASE_DIR,'pw_sharer/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -70,7 +70,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'setup.wsgi.application'
+WSGI_APPLICATION = 'pw_sharer.wsgi.application'
 
 
 # Database
@@ -132,7 +132,7 @@ USE_TZ = True
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR,'setup/static')
+    os.path.join(BASE_DIR,'pw_sharer/static')
 ]
 
 # Default primary key field type
