@@ -1,4 +1,4 @@
-from datetime import timedelta, date
+from datetime import datetime, timedelta, date
 from .validation.validation import fields_validated
 from .validation.authorization import authorized_to_display_pw
 from django.shortcuts import render, get_object_or_404, redirect
@@ -16,6 +16,12 @@ def dashboard(request):
     # If user is authenticated and is superuser, render dashboard
     if is_authenticated and is_superuser:
         sharer_list = Sharer.objects.all()
+
+        # If sharer has expired, set public to false and password is deleted
+        for sharer in sharer_list:
+            if not authorized_to_display_pw(sharer):
+                Sharer.objects.filter(code=sharer.code).update(public=False,password="")
+
         data = {
             'sharers':sharer_list
         }
@@ -108,6 +114,11 @@ def display_link(request,user):
     # If user is authenticated and is superuser, render link display page
     if is_superuser and is_authenticated:
         sharer = get_object_or_404(Sharer, user=user)
+
+        # If sharer has expired, set public to false and password is deleted
+        if not authorized_to_display_pw(sharer):
+            Sharer.objects.filter(code=sharer.code).update(public=False,password="")
+
         data ={
             'sharer':sharer
         }
