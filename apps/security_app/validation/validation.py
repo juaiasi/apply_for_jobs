@@ -44,7 +44,7 @@ def fields_validated(fields,request):
     # Validates if password contains each type of character. If not, reload and shows up an error message.
     for type_string in strings:
         if not has_some_string_char(fields['password'],type_string['string']):
-            messages.error(request,f"A senha deve conter pelo menos um {type_string.type}.")
+            messages.error(request,f"A senha deve conter pelo menos um {type_string['type']}.")
             validated = False
 
     # Returns false if there is an error
