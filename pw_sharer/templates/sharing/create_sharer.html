@@ -2,10 +2,9 @@
 {% load static %}
 {% block content %}
     
-    <div class="container centralizer">
+    <div class="container pb-5">
         <section>
             <div class="form-box form-white m-auto">
-                {% include 'partials/_alerts.html' %}
                 
                 <form action="{% url 'create_sharer' %}" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
@@ -42,6 +41,7 @@
                         <label class="form-label" for="limit_datetime">Data limite de acesso</label>
                         <input class="form-control" type="date" id="limit_datetime" name="limit_datetime" required value="{{date}}">
                     </div>
+                    {% include 'partials/_alerts.html' %}
                     <div>
                         <button class="btn btn-success w-100 btn-lg" type="submit">Gerar link de compartilhamento</button>
                     </div>
