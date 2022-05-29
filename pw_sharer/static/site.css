@@ -1,7 +1,6 @@
 @import url(css/bootstrap.min.css);
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
-
 html,body{
     font-family: "Plus Jakarta Sans";
     height: 100%;
@@ -11,6 +10,10 @@ html,body{
 body{
     padding-top: 4rem;
     padding-bottom: 4rem;
+}
+
+a {
+    white-space: nowrap;
 }
 
 .centralizer {

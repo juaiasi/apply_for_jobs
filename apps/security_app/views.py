@@ -211,7 +211,7 @@ def logged(request):
 # -----------------------------------------------
 # Complementary functions
 
-def generate_code(len=5):
+def generate_code(len=16):
     """Function to generate code, that will be used to construct the url of sharer.
     Parameter: 'len' = length of code"""
 
