@@ -1,12 +1,12 @@
 function generateRandomPassword(len = 16){
-    // Function for generating pandomic passwords with at least one character of each type, having the length provided as argument
+    // Function for generating randomic passwords with at least one character of each type, having the length provided as argument
     let password = "",
         pw_length = len,
         random = Math.random,
                         // remains: minimal number of characters needed for other types of characters
         randomNumber = (remains) => Math.floor(random() * (pw_length - remains)) + 1
     
-    // Sorting number of each type of character
+    // Randomizing number of each type of character
     const numberOfLowers = randomNumber(3),
         numberOfUppers = randomNumber(numberOfLowers + 2),
         numberOfNumbers = randomNumber(numberOfLowers + numberOfUppers + 1),
