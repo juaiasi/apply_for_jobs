@@ -111,7 +111,7 @@ def display_link(request,user):
     is_authenticated = request.user.is_authenticated
     is_superuser = request.user.is_superuser
 
-    # If user is authenticated and is superuser, render link display page
+    # If user is authenticated and is superuser, render the page displaying the link
     if is_superuser and is_authenticated:
         sharer = get_object_or_404(Sharer, user=user)
 
